@@ -7,8 +7,8 @@ from ctypes import *
 
 import os
 ## python 64bit load this
-os.add_dll_directory("O:\MSO\library\SharedLibrary\Windows\X64\Release")
-#os.environ["PATH"] += ";D:\VmMsoSDK\windows\Dll\X64"
+# os.add_dll_directory("../SharedLibrary/Ubuntu/X64/Release")
+# os.environ["PATH"] += ";D:\VmMsoSDK\windows\Dll\X64"
 ## python 32bit load this
 #os.add_dll_directory("D:\github-SDK\windows\Dll\Win32")
 #os.environ["PATH"] += ";D:\github-SDK\windows\Dll\Win32"
@@ -16,7 +16,7 @@ os.add_dll_directory("O:\MSO\library\SharedLibrary\Windows\X64\Release")
 
 
 ## load library   __stdcall using  windll
-mdll = ctypes.WinDLL("vmmso.dll")
+mdll = ctypes.CDLL("../SharedLibrary/Ubuntu/X64/Release/libvmmso.so.1.20")
 
 
 ############################ Initialization/Finished Dll ##############################
@@ -385,7 +385,7 @@ fGetSupportIoNumber.argtypes = []
 fGetSupportIoNumber.restype = ctypes.c_int
 
 # SetIOReadStateCallBack
-IOReadStateCallBack = ctypes.WINFUNCTYPE(None, ctypes.c_void_p, ctypes.c_uint)
+IOReadStateCallBack = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_uint)
 fSetIOReadStateCallBack = mdll.SetIOReadStateCallBack
 fSetIOReadStateCallBack.argtypes = [ctypes.c_void_p, IOReadStateCallBack]
 fSetIOReadStateCallBack.restype = None
@@ -523,7 +523,7 @@ def DDS_init(channel_index, out_mode):
 ################################################### DDS ###################################################
 
 ################################################### IO ###################################################
-@ctypes.WINFUNCTYPE(None, ctypes.c_void_p, ctypes.c_uint)
+@ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_uint)
 def IOReadStateCallBack_func(p, state):
     print(f"IOStateCallBack state {state:#x}")                           
     return 0
@@ -559,7 +559,7 @@ def IOInit():
 print ('## Init Dll: ', fInitDll(1, 1))
 
 ##Data Revice
-@ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
+@ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
 def DevDataReadyCallBack_func(p):
     print('## DevDataReadyCallBack_func', p)
     
@@ -611,7 +611,7 @@ def DevDataReadyCallBack_func(p):
     return 0
     
 ##USB status
-@ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
+@ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
 def DevNoticeAddCallBack_func(p):
     print('DevNoticeAddCallBack_func', p)
     
@@ -698,7 +698,7 @@ def DevNoticeAddCallBack_func(p):
     
     return 0
 
-@ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
+@ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p)
 def DevNoticeRemoveCallBack_func(p):
     print('## DevNoticeRemoveCallBack_func', p)
     ## finish Dll
