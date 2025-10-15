@@ -156,11 +156,11 @@ target_compile_definitions(${PROJECT_NAME}
 if(QT_VERSION_MAJOR GREATER_EQUAL 6)
     target_link_libraries(${PROJECT_NAME}
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::QuickControls2
-        Qt${QT_VERSION_MAJOR}::Widgets vmmso)
+        Qt${QT_VERSION_MAJOR}::Widgets vmmso usb-1.0)
 else()
     target_link_libraries(${PROJECT_NAME}
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick
-        Qt${QT_VERSION_MAJOR}::Widgets vmmso)
+        Qt${QT_VERSION_MAJOR}::Widgets vmmso usb-1.0)
 endif()
 
 
